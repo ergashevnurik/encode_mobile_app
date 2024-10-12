@@ -40,10 +40,10 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final _pageController = PageController(initialPage: 0);
-  final NotchBottomBarController _controller = NotchBottomBarController(index: 0);
-  int maxCount = 5;
-  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  // final _pageController = PageController(initialPage: 0);
+  // final NotchBottomBarController _controller = NotchBottomBarController(index: 0);
+  // int maxCount = 5;
+  // final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   bool isLoggedIn = false;
 
@@ -64,19 +64,19 @@ class _HomeState extends State<Home> {
 
   @override
   void dispose() {
-    _pageController.dispose();
+    // _pageController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> bottomBarPages = [
-      Dashboard(
-        controller: (_controller),
-      ),
-      const SubjectScreen(),
-      isLoggedIn ? const ProfileScreen() : const LoginScreen(),
-    ];
+    // final List<Widget> bottomBarPages = [
+    //   Dashboard(
+    //     controller: (_controller),
+    //   ),
+    //   const SubjectScreen(),
+    //   isLoggedIn ? const ProfileScreen() : const LoginScreen(),
+    // ];
     return MaterialApp(
       // navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,

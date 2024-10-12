@@ -1,3 +1,4 @@
+import 'package:encode_app/components/bottom_bar.dart';
 import 'package:encode_app/components/custom_notification_app_bar.dart';
 import 'package:encode_app/models/Subject.dart';
 import 'package:encode_app/models/Subscriber.dart';
@@ -79,7 +80,8 @@ class _SubjectScreenState extends State<SubjectScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    return Container(
+    return Scaffold(
+        body: Container(
       padding: const EdgeInsets.only(top: 20, bottom: 100),
       child: RefreshIndicator(
         onRefresh: _refreshPage,
@@ -96,7 +98,8 @@ class _SubjectScreenState extends State<SubjectScreen> {
                     CustomAppBarWithNotification(),
                     const Text(
                       'Все курсы',
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                     const Text(
                       'курсы доступны так и на русском так и на узбекском языке',
@@ -145,7 +148,8 @@ class _SubjectScreenState extends State<SubjectScreen> {
                                       const Color.fromRGBO(54, 128, 75, 1),
                                   shadowColor: Colors.transparent,
                                   elevation: 0,
-                                  padding: const EdgeInsets.only(left: 15, right: 15),
+                                  padding: const EdgeInsets.only(
+                                      left: 15, right: 15),
                                 ),
                                 onPressed: () {
                                   Navigator.push(
@@ -159,7 +163,8 @@ class _SubjectScreenState extends State<SubjectScreen> {
                                   );
                                 },
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: const [
                                     Text('Перейти'),
                                     Icon(Icons.chevron_right),
@@ -196,6 +201,8 @@ class _SubjectScreenState extends State<SubjectScreen> {
           ),
         ),
       ),
+    ),
+    bottomNavigationBar: BottomMainBar(),
     );
   }
 }

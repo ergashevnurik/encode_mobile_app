@@ -41,7 +41,8 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Container(
+    return Scaffold(
+      body: Container(
         padding: EdgeInsets.only(top: 15, bottom: 100),
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
@@ -256,6 +257,7 @@ class _DashboardState extends State<Dashboard> {
             ),
           ),
         ),
-      );
+      )
+    );
   }
 }
