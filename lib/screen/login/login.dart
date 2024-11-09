@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:encode_app/components/bottom_bar.dart';
 import 'package:encode_app/models/Subscriber.dart';
 import 'package:encode_app/screen/dashboard/dashboard.dart';
 import 'package:encode_app/service/login_service.dart';
@@ -38,75 +39,89 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Scaffold(
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
       body: Container(
-        child: SingleChildScrollView(
-      child: Container(
-        alignment: Alignment.center,
-        height: size.height,
-        decoration: const BoxDecoration(
-          // color: Colors.white,
-          image: DecorationImage(
-              image: AssetImage('assets/images/banner_bg.png'),
-              fit: BoxFit.cover,
-              opacity: 0.1),
-        ),
-        padding: const EdgeInsets.all(25.0),
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 35,
-            ),
-            Image.asset(
-              'assets/images/logo_dark.png',
-              width: 200,
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            TextField(
-              controller: _usernameController,
-              decoration: InputDecoration(
-                  hintText: 'Пожалуйста введите имя пользователя'),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            TextField(
-              controller: _passwordController,
-              decoration: InputDecoration(
-                hintText: 'Пожалуйста введите пароль',
+          child: SingleChildScrollView(
+            child: Container(
+              alignment: Alignment.center,
+              height: size.height,
+              color: Color.fromARGB(255, 238, 238, 238),
+              // decoration: const BoxDecoration(
+              //   // color: Colors.white,
+              //   image: DecorationImage(
+              //       image: AssetImage('assets/images/banner_bg.png'),
+              //       fit: BoxFit.cover,
+              //       opacity: 0.1),
+              // ),
+              padding: const EdgeInsets.all(25.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(
+                    height: 35,
+                  ),
+                  Image.asset(
+                    'assets/images/logo_dark.png',
+                    width: 200,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  TextField(
+                    controller: _usernameController,
+                    decoration: InputDecoration(
+                        hintText: 'Пожалуйста введите имя пользователя',
+                        border: new OutlineInputBorder(
+                          borderSide: new BorderSide(color: Colors.black)
+                        ),
+                    ),                
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  TextField(
+                    controller: _passwordController,
+                    decoration: InputDecoration(
+                      hintText: 'Пожалуйста введите пароль',
+                      border: new OutlineInputBorder(
+                        borderSide: new BorderSide(color: Colors.black)
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  SizedBox(
+                      width: size.width,
+                      child: ElevatedButton(
+                        onPressed: _isLoggedIn ? null : _login,
+                        child: Text(
+                          'Войти',
+                          style: TextStyle(fontWeight: FontWeight.w600),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                            primary: Color.fromRGBO(82, 180, 110, 1),
+                            onPrimary: Colors.white,
+                            padding: EdgeInsets.all(25)),
+                      )),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  const Text(
+                    'ШКОЛА СОВРЕМЕННЫХ ПРОФЕССИЙ!',
+                    style: TextStyle(
+                        fontFamily: 'Playwrite USA Modern',
+                        fontWeight: FontWeight.w600),
+                  )
+                ],
               ),
             ),
-            const SizedBox(
-              height: 20,
-            ),
-            SizedBox(
-                width: size.width,
-                child: ElevatedButton(
-                  onPressed: _isLoggedIn ? null : _login,
-                  child: Text(
-                    'Войти',
-                    style: TextStyle(fontWeight: FontWeight.w600),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                      primary: Color.fromRGBO(82, 180, 110, 1),
-                      onPrimary: Colors.white,
-                      padding: EdgeInsets.all(15)),
-                )),
-            const SizedBox(
-              height: 15,
-            ),
-            const Text(
-              'ШКОЛА СОВРЕМЕННЫХ ПРОФЕССИЙ!',
-              style: TextStyle(
-                  fontFamily: 'Playwrite USA Modern',
-                  fontWeight: FontWeight.w600),
-            )
-          ],
-        ),
+          )
       ),
-    ))
+      bottomNavigationBar: BottomMainBar(activeIndex: 2), 
+    )
     );
   }
 } 

@@ -1,0 +1,12 @@
+{
+  "@@locale": "ch",
+  "welcome": "欢迎来到 ENCODE SCHOOL",
+  "welcomeDescription": "通过引人入胜的课程开始您的学习之旅，这些课程精心设计，可帮助您逐步提高技能。",
+  "stayOrganized": "保持有条理，向前迈进",
+  "stayOrganizedDescription": "跟踪您的进步和成就，让学习保持在正确的轨道上。",
+  "getStarted": "每天取得更大成就",
+  "getStartedDescription": "解锁新知识，赚取奖励，并在每一课中挑战自我。",
+  "selectLanguage": "选择语言",
+  "skip": "跳过",
+  "startNow": "立即开始"
+}

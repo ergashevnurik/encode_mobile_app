@@ -1,0 +1,12 @@
+{
+  "@@locale": "en",
+  "welcome": "Welcome to ENCODE SCHOOL",
+  "welcomeDescription": "Begin your journey with engaging, expertly crafted courses designed to build your skills step-by-step.",
+  "stayOrganized": "Stay Organized, Stay Ahead",
+  "stayOrganizedDescription": "Track your progress and achievements to keep your learning on the right path.",
+  "getStarted": "Achieve More Every Day",
+  "getStartedDescription": "Unlock new knowledge, earn rewards, and challenge yourself with each lesson.",
+  "selectLanguage": "Select Language",
+  "skip": "Skip",
+  "startNow": "Start Now"
+}

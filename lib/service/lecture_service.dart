@@ -6,7 +6,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:video_player/video_player.dart';
 
 class LectureService {
-  final String _baseUrl = dotenv.env['BASE_SUBJECT_URL']!;
+  // final String _baseUrl = dotenv.env['BASE_SUBJECT_URL']!;
+  final String _baseUrl = 'http://127.0.0.1:5000';
   // Map<int, VideoPlayerController> _videoControllers = {};
 
   Future<List<Lecture>?> fetchLectures(id) async {

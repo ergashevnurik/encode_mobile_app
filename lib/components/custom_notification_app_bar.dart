@@ -15,7 +15,7 @@ class _CustomAppBarWithNotificationState
     return Column(
       children: [
         SizedBox(
-          height: 15,
+          height: 5,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -26,15 +26,11 @@ class _CustomAppBarWithNotificationState
             ),
             Row(
               children: [
-                // Container(
-                //   child: IconButton(
-                //       onPressed: () {},
-                //       icon: Icon(Icons.search)
-                //   ),
-                // ),
-                Container(
-                  child: IconButton(
-                      onPressed: () {}, icon: Icon(Icons.notifications)),
+                IconButton(
+                  icon: Icon(Icons.menu),
+                  onPressed: () {
+                    Scaffold.of(context).openDrawer();
+                  },
                 ),
               ],
             ),

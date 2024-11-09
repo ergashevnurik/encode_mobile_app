@@ -10,7 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginService {
   // final String _baseUrl = dotenv.env['BASE_SUBJECT_URL']!;
-  final String _baseUrl = 'https://encode.uz';
+  final String _baseUrl = 'http://127.0.0.1:5000';
 
   List<Subscriber> subscribers = [];
   bool _isLoggedIn = false;
@@ -72,9 +72,14 @@ class LoginService {
           pref.setBool("isLoggedIn", true);
 
           // Navigate to another screen
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
-            return Dashboard();
-          }));
+          // Navigator.pop(context);
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => Dashboard())
+          );
+          // Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
+          //   return Dashboard();
+          // }));
         } else {
           print('Login failed: ${responseData['message']}');
         }

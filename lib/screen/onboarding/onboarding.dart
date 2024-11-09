@@ -1,187 +1,230 @@
+import 'package:encode_app/main.dart';
 import 'package:encode_app/screen/dashboard/dashboard.dart';
-import 'package:encode_app/screen/login/login.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:introduction_screen/introduction_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
-class onBoardingScreen extends StatefulWidget {
-  const onBoardingScreen({super.key});
-
+class OnboardingScreen extends StatefulWidget {
   @override
-  State<onBoardingScreen> createState() => _onBoardingScreenState();
+  _OnboardingScreenState createState() => _OnboardingScreenState();
 }
 
-class _onBoardingScreenState extends State<onBoardingScreen> {
-   final introKey = GlobalKey<IntroductionScreenState>();
+class _OnboardingScreenState extends State<OnboardingScreen> {
+  final PageController _controller = PageController();
+  int _currentPage = 0;
+  String? selectedLanguage;
 
-  void _onIntroEnd(context) {
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (_) => const Dashboard()),
-    );
-  }
+  final List<Map<String, String>> _onboardingData = [
+    {
+      'title_key': 'welcome_title',
+      'description_key': 'welcome_description',
+      'image': 'assets/playstore.png',
+    },
+    {
+      'title_key': 'stay_organized_title',
+      'description_key': 'stay_organized_description',
+      'image': 'assets/playstore.png',
+    },
+    {
+      'title_key': 'get_started_title',
+      'description_key': 'get_started_description',
+      'image': 'assets/playstore.png',
+    },
+  ];
 
-  Widget _buildFullscreenImage() {
-    return Image.asset(
-      'assets/images/logo_dark.png',
-      fit: BoxFit.cover,
-      height: double.infinity,
-      width: double.infinity,
-      alignment: Alignment.center,
-    );
-  }
+  final List<Map<String, String>> _languages = [
+    {'code': 'en', 'flag': 'assets/images/flags/flag_en.png'}, // English
+    {'code': 'es', 'flag': 'assets/images/flags/flag_es.png'}, // Spanish
+    {'code': 'ru', 'flag': 'assets/images/flags/flag_ru.png'}, // Russian
+    {'code': 'uz', 'flag': 'assets/images/flags/flag_uz.png'}, // Uzbek
+    {'code': 'tr', 'flag': 'assets/images/flags/flag_tr.png'}, // Turkish
+    {'code': 'lv', 'flag': 'assets/images/flags/flag_lv.png'}, // Latvian
+    {'code': 'ch', 'flag': 'assets/images/flags/flag_ch.png'}, // Chinese
+  ];
 
-  Widget _buildImage(String assetName, [double width = 350]) {
-    return Image.asset('assets/$assetName', width: width);
-  }
-  
   @override
   Widget build(BuildContext context) {
-    const bodyStyle = TextStyle(fontSize: 19.0);
+    final localizations = AppLocalizations.of(context)!;
 
-    const pageDecoration = PageDecoration(
-      titleTextStyle: TextStyle(fontSize: 28.0, fontWeight: FontWeight.w700),
-      bodyTextStyle: bodyStyle,
-      bodyPadding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
-      pageColor: Colors.white,
-      imagePadding: EdgeInsets.zero,
-    );
-
-    return IntroductionScreen(
-      key: introKey,
-      globalBackgroundColor: Colors.white,
-      allowImplicitScrolling: true,
-      autoScrollDuration: 3000,
-      infiniteAutoScroll: true,
-      globalHeader: Align(
-        alignment: Alignment.topRight,
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 16, right: 16),
-            child: _buildImage('images/logo_dark.png', 100),
-          ),
-        ),
-      ),
-      globalFooter: SizedBox(
-        width: double.infinity,
-        height: 60,
-        child: ElevatedButton(
-          child: const Text(
-            'Let\'s go right away!',
-            style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
-          ),
-          onPressed: () => _onIntroEnd(context),
-        ),
-      ),
-      pages: [
-        PageViewModel(
-          title: "Fractional shares",
-          body:
-              "Instead of having to buy an entire share, invest any amount you want.",
-          image: _buildImage('images/logo_dark.png'),
-          decoration: pageDecoration,
-        ),
-        PageViewModel(
-          title: "Learn as you go",
-          body:
-              "Download the Stockpile app and master the market with our mini-lesson.",
-          image: _buildImage('images/logo_dark.png'),
-          decoration: pageDecoration,
-        ),
-        PageViewModel(
-          title: "Kids and teens",
-          body:
-              "Kids and teens can track their stocks 24/7 and place trades that you approve.",
-          image: _buildImage('images/logo_dark.png'),
-          decoration: pageDecoration,
-        ),
-        PageViewModel(
-          title: "Full Screen Page",
-          body:
-              "Pages can be full screen as well.\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id euismod lectus, non tempor felis. Nam rutrum rhoncus est ac venenatis.",
-          image: _buildFullscreenImage(),
-          decoration: pageDecoration.copyWith(
-            contentMargin: const EdgeInsets.symmetric(horizontal: 16),
-            fullScreen: true,
-            bodyFlex: 2,
-            imageFlex: 3,
-            safeArea: 100,
-          ),
-        ),
-        PageViewModel(
-          title: "Another title page",
-          body: "Another beautiful body text for this example onboarding",
-          image: _buildImage('images/logo_dark.png'),
-          footer: ElevatedButton(
-            onPressed: () {
-              introKey.currentState?.animateScroll(0);
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.lightBlue,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8.0),
+    return Scaffold(
+      backgroundColor: Color.fromARGB(255, 238, 238, 238),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            if (selectedLanguage == null) _buildLanguageSelection(),
+            if (selectedLanguage != null) ...[
+              Expanded(
+                child: PageView.builder(
+                  controller: _controller,
+                  onPageChanged: (index) {
+                    setState(() {
+                      _currentPage = index;
+                    });
+                  },
+                  itemCount: _onboardingData.length,
+                  itemBuilder: (context, index) => _buildOnboardingPage(index, localizations),
+                ),
               ),
-            ),
-            child: const Text(
-              'FooButton',
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
-          decoration: pageDecoration.copyWith(
-            bodyFlex: 6,
-            imageFlex: 6,
-            safeArea: 80,
-          ),
-        ),
-        PageViewModel(
-          title: "Title of last page - reversed",
-          bodyWidget: const Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("Click on ", style: bodyStyle),
-              Icon(Icons.edit),
-              Text(" to edit a post", style: bodyStyle),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(
+                  _onboardingData.length,
+                  (index) => _buildDot(index),
+                ),
+              ),
+              const SizedBox(height: 20),
+              _currentPage == _onboardingData.length - 1
+                  ? ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushReplacementNamed(context, '/home');
+                      },
+                      child: Text(localizations.startNow),
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStatePropertyAll(Color.fromRGBO(82, 180, 110, 1)),
+                      ),
+                    )
+                  : TextButton(
+                      onPressed: () {
+                        Navigator.pushReplacementNamed(context, '/home');
+                      },
+                      child: Text(
+                        localizations.skip,
+                        style: TextStyle(color: Color.fromRGBO(82, 180, 110, 1)),
+                      ),
+                    ),
+              const SizedBox(height: 40),
             ],
-          ),
-          decoration: pageDecoration.copyWith(
-            bodyFlex: 2,
-            imageFlex: 4,
-            bodyAlignment: Alignment.bottomCenter,
-            imageAlignment: Alignment.topCenter,
-          ),
-          image: _buildImage('images/logo_dark.png'),
-          reverse: true,
-        ),
-      ],
-      onDone: () => _onIntroEnd(context),
-      onSkip: () => _onIntroEnd(context), // You can override onSkip callback
-      showSkipButton: true,
-      skipOrBackFlex: 0,
-      nextFlex: 0,
-      showBackButton: false,
-      //rtl: true, // Display as right-to-left
-      back: const Icon(Icons.arrow_back),
-      skip: const Text('Skip', style: TextStyle(fontWeight: FontWeight.w600)),
-      next: const Icon(Icons.arrow_forward),
-      done: const Text('Done', style: TextStyle(fontWeight: FontWeight.w600)),
-      curve: Curves.fastLinearToSlowEaseIn,
-      controlsMargin: const EdgeInsets.all(16),
-      controlsPadding: kIsWeb
-          ? const EdgeInsets.all(12.0)
-          : const EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 4.0),
-      dotsDecorator: const DotsDecorator(
-        size: Size(10.0, 10.0),
-        color: Color(0xFFBDBDBD),
-        activeSize: Size(22.0, 10.0),
-        activeShape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(25.0)),
-        ),
-      ),
-      dotsContainerDecorator: const ShapeDecoration(
-        color: Colors.black87,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(8.0)),
+          ],
         ),
       ),
     );
   }
+
+  Widget _buildLanguageSelection() {
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const Text(
+            'Select Language',
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 20),
+          Wrap(
+            alignment: WrapAlignment.center,
+            spacing: 10,
+            runSpacing: 10,
+            children: _languages.map((language) {
+              return GestureDetector(
+                onTap: () {
+                  setState(() {
+                    selectedLanguage = language['code'];
+                    // Update the app's locale based on selected language code
+                    Home.setLocale(context, Locale(selectedLanguage!));
+                  });
+                },
+                child: Container(
+                  width: 70,
+                  height: 70,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.rectangle,
+                  ),
+                  child: ClipPath(
+                    clipper: OctagonClipper(),
+                    child: Image.asset(
+                      language['flag']!,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              );
+            }).toList(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildOnboardingPage(int index, AppLocalizations localizations) {
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(
+            _onboardingData[index]['image']!,
+            height: 250,
+          ),
+          const SizedBox(height: 30),
+          Text(
+            _getLocalizedString(_onboardingData[index]['title_key']!, localizations),
+            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 15),
+          Text(
+            _getLocalizedString(_onboardingData[index]['description_key']!, localizations),
+            style: const TextStyle(fontSize: 16),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    );
+  }
+
+  String _getLocalizedString(String key, AppLocalizations localizations) {
+    switch (key) {
+      case 'welcome_title':
+        return localizations.welcome;
+      case 'stay_organized_title':
+        return localizations.stayOrganized;
+      case 'get_started_title':
+        return localizations.getStarted;
+      case 'welcome_description':
+        return localizations.welcomeDescription;
+      case 'stay_organized_description':
+        return localizations.stayOrganizedDescription;
+      case 'get_started_description':
+        return localizations.getStartedDescription;
+      default:
+        return key; // Fallback to the key if no translation is found
+    }
+  }
+
+  Widget _buildDot(int index) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 4.0),
+      width: _currentPage == index ? 12.0 : 8.0,
+      height: 8.0,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: _currentPage == index ? Color.fromRGBO(82, 180, 110, 1) : Colors.grey,
+      ),
+    );
+  }
+}
+
+// Custom Octagon Clipper
+class OctagonClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    final path = Path();
+    path.moveTo(size.width * 0.25, 0);
+    path.lineTo(size.width * 0.75, 0);
+    path.lineTo(size.width, size.height * 0.25);
+    path.lineTo(size.width, size.height * 0.75);
+    path.lineTo(size.width * 0.75, size.height);
+    path.lineTo(size.width * 0.25, size.height);
+    path.lineTo(0, size.height * 0.75);
+    path.lineTo(0, size.height * 0.25);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }

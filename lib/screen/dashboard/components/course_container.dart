@@ -14,7 +14,7 @@ class CourseContainer extends StatelessWidget {
           height: 250,
           width: 250,
           decoration: BoxDecoration(
-              color: Color.fromRGBO(82, 180, 110, 1),
+              color: Color.fromRGBO(21, 28, 51, 1),
               borderRadius: BorderRadius.all(Radius.circular(10))
           ),
           child: Padding(

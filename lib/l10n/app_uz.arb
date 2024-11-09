@@ -1,0 +1,12 @@
+{
+  "@@locale": "uz",
+  "welcome": "ENCODE SCHOOL ga xush kelibsiz",
+  "welcomeDescription": "Bosqichma-bosqich ko'nikmalarni oshirish uchun tuzilgan qiziqarli va puxta kurslar bilan o'z safaringizni boshlang.",
+  "stayOrganized": "Tartibli bo'ling va oldinga boring",
+  "stayOrganizedDescription": "O'zingizning o'sishingiz va yutuqlaringizni kuzatib, o'qishingizni to'g'ri yo'nalishda olib boring.",
+  "getStarted": "Har kuni ko'proq narsaga erishing",
+  "getStartedDescription": "Har bir darsda yangi bilimlarni oching, mukofotlarga ega bo'ling va o'zingizni sinovdan o'tkazing.",
+  "selectLanguage": "Tilni tanlang",
+  "skip": "O'tkazib yuborish",
+  "startNow": "Hozir boshlash"
+}

@@ -1,0 +1,7 @@
+{
+    "/auth/api/v1/user": {
+      "target": "http://localhost:5000",
+      "secure": false
+    }
+  }
+  

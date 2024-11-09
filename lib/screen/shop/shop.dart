@@ -1,4 +1,5 @@
 import 'package:encode_app/components/bottom_bar.dart';
+import 'package:encode_app/screen/shop/components/shop_details_card.dart';
 import 'package:flutter/material.dart';
 
 class ShopScreen extends StatefulWidget {
@@ -9,6 +10,40 @@ class ShopScreen extends StatefulWidget {
 }
 
 class _ShopScreenState extends State<ShopScreen> {
+
+  final List<Map<String, String>> products = [
+    {
+      "price": "30",
+      "title": "Hat",
+      "img": "assets/images/shop/hat.jpg"
+    },
+    {
+      "price": "30",
+      "title": "Cup",
+      "img": "assets/images/shop/cup.png"
+    },
+    {
+      "price": "30",
+      "title": "Pen",
+      "img": "assets/images/shop/pen.jpg"
+    },
+    {
+      "price": "30",
+      "title": "T-shirt",
+      "img": "assets/images/shop/tshirt.jpg"
+    },
+    {
+      "price": "30",
+      "title": "Note book",
+      "img": "assets/images/shop/white_note_book.png"
+    },
+    {
+      "price": "30",
+      "title": "Book",
+      "img": "assets/images/shop/black_book.png"
+    },
+  ];
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -23,88 +58,21 @@ class _ShopScreenState extends State<ShopScreen> {
       body: Padding(
         padding: const EdgeInsets.all(25.0),
         child: GridView.count(
-          // Create a grid with 2 columns. If you change the scrollDirection to
-          // horizontal, this produces 2 rows.
-          crossAxisCount: 2,
+          crossAxisCount: 1,
           mainAxisSpacing: 25,
           crossAxisSpacing: 25,
           // Generate 100 widgets that display their index in the List.
-          children: List.generate(7, (index) {
-            return Center(
-                child: Container(
-              width: size.width,
-              height: size.height,
-              // margin: EdgeInsets.all(10),
-              padding: EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(5))),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Image.asset(
-                    'assets/playstore.png',
-                    width: 80,
-                  ),
-                  SizedBox(height: 15),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Название\nЦена',
-                        style: TextStyle(
-                          fontSize: 12
-                        ),
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.green,
-                          borderRadius: BorderRadius.all(Radius.circular(15))
-                        ),
-                        child: IconButton(
-                          onPressed: () {
-                            showModalBottomSheet(
-                              context: context,
-                              builder: (context) {
-                                return Wrap(
-                                  children: [
-                                    ListTile(
-                                      leading: Icon(Icons.warning),
-                                      title: Text('Скоро будет добавлено! А пока интригиии')
-                                    ),
-                                    ListTile(
-                                      leading: Icon(Icons.share),
-                                      title: Text('Скоро будет добавлено! А пока интригиии'),
-                                    ),
-                                    ListTile(
-                                      leading: Icon(Icons.copy),
-                                      title: Text('Скоро будет добавлено! А пока интригиии'),
-                                    ),
-                                    ListTile(
-                                      leading: Icon(Icons.edit),
-                                      title: Text('Скоро будет добавлено! А пока интригиии'),
-                                    ),
-                                  ],
-                                );
-                            }
-                            );
-                          }, 
-                          icon: Icon(
-                            Icons.add,
-                            size: 18,
-                            color: Colors.white,
-                          )
-                        ),
-                      )
-                    ],
-                  )
-                ],
-              ),
-            ));
-          }),
+          children: List.generate(products.length, (index) {
+            return ShopDetailsCard(
+              imgSrc: products[index]['img']!, 
+              title: products[index]['title']!, 
+              price: products[index]['price']!
+            );
+          }
         ),
       ),
-      // bottomNavigationBar: BottomMainBar(),
+    ),
+    bottomNavigationBar: BottomMainBar(activeIndex: 0),
     );
   }
 }

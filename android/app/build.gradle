@@ -14,12 +14,12 @@ if (localPropertiesFile.exists()) {
 
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
 if (flutterVersionCode == null) {
-    flutterVersionCode = '3'
+    flutterVersionCode = '8'
 }
 
 def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
-    flutterVersionName = '3'
+    flutterVersionName = '8'
 }
 
 def keystoreProperties = new Properties()
@@ -51,13 +51,13 @@ android {
         applicationId "encode_app.school"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion 34
+        minSdkVersion 21
         targetSdkVersion 34
         // targetSdkVersion flutter.targetSdkVersion
         // versionCode flutterVersionCode.toInteger()
-        versionCode '3'.toInteger()
+        versionCode '8'.toInteger()
         // versionName flutterVersionName
-        versionName '3'
+        versionName '8'
         multiDexEnabled true
     }
 

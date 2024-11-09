@@ -81,8 +81,7 @@ class _SubjectScreenState extends State<SubjectScreen> {
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-        body: Container(
-      padding: const EdgeInsets.only(top: 20, bottom: 100),
+      body: Container(
       child: RefreshIndicator(
         onRefresh: _refreshPage,
         child: SingleChildScrollView(
@@ -95,14 +94,13 @@ class _SubjectScreenState extends State<SubjectScreen> {
               children: [
                 if (_isLoggedIn) ...[
                   if (_subjects.isNotEmpty) ...[
-                    CustomAppBarWithNotification(),
                     const Text(
-                      'Все курсы',
+                      'Ваши курсы',
                       style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                     const Text(
-                      'курсы доступны так и на русском так и на узбекском языке',
+                      'курсы которые вы подобрали',
                       style: TextStyle(fontSize: 12),
                     ),
                     const SizedBox(height: 15),
@@ -145,7 +143,7 @@ class _SubjectScreenState extends State<SubjectScreen> {
                               ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor:
-                                      const Color.fromRGBO(54, 128, 75, 1),
+                                  const Color.fromRGBO(54, 128, 75, 1),
                                   shadowColor: Colors.transparent,
                                   elevation: 0,
                                   padding: const EdgeInsets.only(
@@ -164,7 +162,7 @@ class _SubjectScreenState extends State<SubjectScreen> {
                                 },
                                 child: Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  MainAxisAlignment.spaceBetween,
                                   children: const [
                                     Text('Перейти'),
                                     Icon(Icons.chevron_right),
@@ -202,7 +200,7 @@ class _SubjectScreenState extends State<SubjectScreen> {
         ),
       ),
     ),
-    bottomNavigationBar: BottomMainBar(),
+    bottomNavigationBar: BottomMainBar(activeIndex: 1), 
     );
   }
 }

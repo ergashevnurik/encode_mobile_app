@@ -5,8 +5,8 @@ import '../models/Subject.dart'; // Adjust the path based on your project struct
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class SubjectService {
-  final String _baseUrl = dotenv.env[
-      'BASE_SUBJECT_URL']!; // You can store this in a secure environment later
+  // final String _baseUrl = dotenv.env['BASE_SUBJECT_URL']!; // You can store this in a secure environment later
+  final String _baseUrl = 'http://127.0.0.1:5000';
 
   // Fetch user ID from SharedPreferences
   Future<String?> _getUserId() async {

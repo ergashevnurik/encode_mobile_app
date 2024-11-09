@@ -1,12 +1,14 @@
+import 'package:encode_app/screen/subject/all_subjects.dart';
+import 'package:flutter/material.dart';
 import 'package:encode_app/screen/dashboard/dashboard.dart';
 import 'package:encode_app/screen/login/login.dart';
 import 'package:encode_app/screen/profile/profile.dart';
 import 'package:encode_app/screen/subject/subject.dart';
-import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class BottomMainBar extends StatefulWidget {
-  const BottomMainBar({super.key});
+  final int activeIndex; // To track the active tab
+  const BottomMainBar({Key? key, required this.activeIndex}) : super(key: key);
 
   @override
   State<BottomMainBar> createState() => _BottomMainBarState();
@@ -14,6 +16,7 @@ class BottomMainBar extends StatefulWidget {
 
 class _BottomMainBarState extends State<BottomMainBar> {
   bool isLoggedIn = false;
+
   @override
   void initState() {
     super.initState();
@@ -29,62 +32,65 @@ class _BottomMainBarState extends State<BottomMainBar> {
     });
   }
 
+  void _navigateToPage(int index, Widget page) {
+    if (widget.activeIndex != index) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => page),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    bool isPressed = false;
     return BottomAppBar(
       padding: EdgeInsets.all(10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Dashboard())
-              );
-            },
-            icon: Icon(
-              Icons.home,
-              // color: Color.fromRGBO(82, 180, 110, 1),
-            ),
+          _buildIconButton(
+            0,
+            Icons.home,
+            'Home',
+            Dashboard(),
           ),
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => SubjectScreen())
-              );
-            },
-            icon: Icon(
-              Icons.book,
-              color: Colors.black,
-            ),
+          _buildIconButton(
+            1,
+            Icons.book,
+            isLoggedIn ? 'Subjects' : 'All Subjects',
+            isLoggedIn ? SubjectScreen() : AllSubjectScreen(),
           ),
-          // IconButton(
-          //   onPressed: () {},
-          //   icon: Icon(
-          //     Icons.shop,
-          //     color: Colors.black,
-          //   ),
-          // ),
-          IconButton(
-            onPressed: () {
-              setState(() {
-                isPressed = !isPressed;
-              });
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => isLoggedIn ? ProfileScreen() : LoginScreen()),
-              );
-            },
-            icon: Icon(
-              isLoggedIn ? Icons.money : Icons.login,
-            ),
-          )
+          _buildIconButton(
+            2,
+            isLoggedIn ? Icons.money : Icons.login,
+            isLoggedIn ? 'Profile' : 'Login',
+            isLoggedIn ? ProfileScreen() : LoginScreen(),
+          ),
         ],
       ),
     );
   }
-}
 
+  Widget _buildIconButton(int index, IconData icon, String label, Widget page) {
+    final isActive = widget.activeIndex == index;
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        IconButton(
+          onPressed: () => _navigateToPage(index, page),
+          icon: Icon(
+            icon,
+            color: isActive ? Colors.green : Colors.black,
+          ),
+        ),
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: 12,
+            color: isActive ? Colors.green : Colors.black,
+          ),
+        ),
+      ],
+    );
+  }
+}
