@@ -2,6 +2,7 @@ import 'package:encode_app/components/bottom_bar.dart';
 import 'package:encode_app/screen/login/login.dart';
 import 'package:encode_app/screen/profile/components/profile_icon_text_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http; // For making API calls
 import 'dart:convert'; // For JSON encoding
@@ -22,6 +23,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String? profileImg;
   String? role;
   String? localizedRole;
+  final String _baseUrl = dotenv.env['BASE_URL']!;
 
   @override
   void initState() {
@@ -54,7 +56,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future<void> _saveProfileData(String key, dynamic value) async {
-    const apiUrl = 'http://127.0.0.1:5000/api/update_profile';
+    final apiUrl = '$_baseUrl/api/update_profile';
 
     final response = await http.post(
       Uri.parse(apiUrl),

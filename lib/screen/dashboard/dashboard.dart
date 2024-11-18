@@ -17,6 +17,7 @@ import 'package:encode_app/screen/statistics/statistic.dart';
 import 'package:encode_app/screen/subject/all_subjects.dart';
 import 'package:encode_app/screen/subject/subject.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../components/app_bar.dart';
@@ -25,6 +26,7 @@ import '../profile/profile.dart';
 import 'components/course_container.dart';
 import 'package:http/http.dart' as http;
 import 'package:carousel_slider/carousel_slider.dart';
+
 
 
 class Dashboard extends StatefulWidget {
@@ -36,13 +38,14 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  final String _baseUrl = dotenv.env['BASE_BO_URL']!;
   List<Subject> subjects = [];
   bool _isLoading = true;
   String? _errorMessage;
 
   Future<void> fetchSubjects() async {
     final response = await http.get(Uri.parse(
-      'http://localhost:8082/subject/api/v1/loadSubjects'),
+      '$_baseUrl/subject/api/v1/loadSubjects'),
        headers: {
         'Accept-Charset': 'utf-8', // Optionally set encoding
       },
@@ -94,6 +97,7 @@ class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 238, 238, 238),
       body: Container(
       child: SingleChildScrollView(
         scrollDirection: Axis.vertical,

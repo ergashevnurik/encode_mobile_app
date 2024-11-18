@@ -9,8 +9,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginService {
-  // final String _baseUrl = dotenv.env['BASE_SUBJECT_URL']!;
-  final String _baseUrl = 'http://127.0.0.1:5000';
+  final String _baseUrl = dotenv.env['BASE_URL']!;
+  // final String _baseUrl = 'http://127.0.0.1:5000';
 
   List<Subscriber> subscribers = [];
   bool _isLoggedIn = false;

@@ -55,7 +55,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: any
-  google_maps_flutter:
+  # google_maps_flutter:
   location:
   flutter_launcher_icons:
   shared_preferences: ^2.2.3

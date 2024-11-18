@@ -6,6 +6,7 @@ import 'package:encode_app/screen/games/word_search.dart';
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flip_card/flip_card.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
 class FlashCardScreen extends StatefulWidget {
@@ -17,6 +18,7 @@ class FlashCardScreen extends StatefulWidget {
 }
 
 class _FlashCardScreenState extends State<FlashCardScreen> {
+  final String _baseUrl = dotenv.env['BASE_URL']!;
   late FlipCardController _controller;
   List<Word> wordList = [];
   String? _errorMessage;
@@ -25,7 +27,7 @@ class _FlashCardScreenState extends State<FlashCardScreen> {
   Future<void> _loadWords() async {
     try {
       final response = await http.post(
-        Uri.parse('http://10.0.2.2:5000/words/api/v1/findAll'),
+        Uri.parse('$_baseUrl/words/api/v1/findAll'),
         headers: {'Content-Type': 'application/json'}, // Set the content type
       );
       if (response.statusCode == 200) {

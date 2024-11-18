@@ -4,6 +4,7 @@ import 'package:encode_app/components/bottom_bar.dart';
 import 'package:encode_app/models/backoffice/subject.dart';
 import 'package:encode_app/screen/lecture/lecture.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
 class AllSubjectScreen extends StatefulWidget {
@@ -15,10 +16,11 @@ class AllSubjectScreen extends StatefulWidget {
 
 class _AllSubjectScreenState extends State<AllSubjectScreen> {
   List<Subject> _subjects = [];
+  final String _baseUrl = dotenv.env['BASE_BO_URL']!;
 
   Future<void> fetchSubjects() async {
     final response = await http.get(Uri.parse(
-      'http://localhost:8082/subject/api/v1/loadSubjects'),
+      '$_baseUrl/subject/api/v1/loadSubjects'),
        headers: {
         'Accept-Charset': 'utf-8', // Optionally set encoding
       },
